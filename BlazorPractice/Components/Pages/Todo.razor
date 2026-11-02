@@ -1,0 +1,39 @@
+
+@page "/todo"
+@rendermode InteractiveServer
+
+<h3>My To-Do List</h3>
+
+<input @bind="newTask" placeholder="Enter a task" />
+<button @onclick="AddTask">Add</button>
+
+<ul>
+    @foreach (var task in tasks)
+    {
+        <li>
+            @task
+            <button @onclick="() => RemoveTask(task)">
+                Delete
+            </button>
+        </li>
+    }
+</ul>
+
+@code {
+    private string newTask = "";
+    private List<string> tasks = new();
+
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            tasks.Add(newTask);
+            newTask = "";
+        }
+    }
+
+    private void RemoveTask(string task)
+    {
+        tasks.Remove(task);
+    }
+}
